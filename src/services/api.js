@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const pokeApi = axios.create({
-  baseURL: "https://samplepokedex.herokuapp.com",
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 const getPokemons = async (nameOrId = null) => {
