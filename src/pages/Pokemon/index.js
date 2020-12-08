@@ -222,25 +222,25 @@ export default function Pokemon({ location }) {
               </PokeDataValues>
             </PokeDataContainer>
             <PokeDataContainer>
-              <PokeDataTitles>ctach rate</PokeDataTitles>
+              <PokeDataTitles>Catch rate</PokeDataTitles>
               <PokeDataValues style={{ color: colorFirstType }}>
-                {data.training.ctach_rate}
+                {data.training.catch_rate}
               </PokeDataValues>
             </PokeDataContainer>
             <PokeDataContainer>
-              <PokeDataTitles>ctach rate</PokeDataTitles>
+              <PokeDataTitles>Base Friendship</PokeDataTitles>
               <PokeDataValues style={{ color: colorFirstType }}>
                 {data.training.base_friendship} (normal)
               </PokeDataValues>
             </PokeDataContainer>
             <PokeDataContainer>
-              <PokeDataTitles>ctach rate</PokeDataTitles>
+              <PokeDataTitles>Base Exp.</PokeDataTitles>
               <PokeDataValues style={{ color: colorFirstType }}>
                 {data.training.base_exp}
               </PokeDataValues>
             </PokeDataContainer>
             <PokeDataContainer>
-              <PokeDataTitles>ctach rate</PokeDataTitles>
+              <PokeDataTitles>Growth Rate</PokeDataTitles>
               <PokeDataValues style={{ color: colorFirstType }}>
                 {data.training.growth_rate}
               </PokeDataValues>
