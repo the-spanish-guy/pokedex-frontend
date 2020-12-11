@@ -5,11 +5,59 @@ const Container = styled.div`
   display: flex;
   flex-direction: "row";
   /* background-color: red; */
+  
+  @media(max-width: 800px) {
+    & .menu {
+      display: none;
+    }
+
+    & .pokeDisplay {
+      width: 100vw !important;
+      justify-content: center;
+      /* display: none; */
+    }
+    & .card {
+      width: 80vw;
+      /* height: 250px; */
+      height: 70vw;
+    }
+  }
+`;
+
+const LoadingContent = styled.div`
+/* right: 0px; */
+width: 60%;
+max-width: 100%;
+height: 100vh;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+/* cursor: pointer; */
+/* background-color: #f0f; */
+/* background-image: url(${logo}) */
+@keyframes test {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+& img {
+  width: 50%;
+  height: 50%;
+  /* transform: rotate(36deg); */
+  animation: test .4s linear infinite;
+  /* transition: all */
+}
 `;
 
 const MenuSection = styled.div`
-  position: fixed;
+  /* position: fixed; */
   width: 40%;
+  max-width: 600px;
   height: 100vh;
   background-color: #ffffff;
   display: flex;
@@ -80,20 +128,22 @@ const PokedexDetailsContent = styled.div`
 `;
 
 const PokemonDisplay = styled.div`
-  right: 0px;
+  /* right: 0px; */
   width: 60%;
+  max-width: 100%;
   height: 100vh;
-  display: grid;
-  cursor: pointer;
-  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* cursor: pointer; */
   background-color: #eeeeee;
-  grid-template-columns: repeat(3, 1fr);
 `;
 
 const Card = styled.div`
   width: 220px;
   height: 220px;
   margin: 10px;
+  cursor: pointer;
 
   border-radius: 24px;
   .pokemon {
@@ -128,5 +178,6 @@ export {
   PokedexTitle,
   PokedexDetailsContent,
   PokedexSearch,
-  Button
+  Button,
+  LoadingContent
 };

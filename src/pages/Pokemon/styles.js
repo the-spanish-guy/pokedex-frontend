@@ -1,13 +1,18 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-display: flex;
-flex-direction: "row";
-/* background-color: red; */
+  display: flex;
+  flex-direction: "row";
+  /* background-color: red; */
+  @media (max-width: 800px) {
+    & .pokeContainer {
+      border: 1px solid red;
+    }
+  }
 `;
 
 const Pokemon = styled.div`
-position: fixed;
+  position: fixed;
   width: 50%;
   height: 100vh;
 `;
@@ -44,7 +49,7 @@ const DataContainer = styled.div`
 
 const PokeDataContainer = styled.div`
   margin-top: 20px;
-  margin-bottom: 20px
+  margin-bottom: 20px;
 `;
 
 const PokeDataTitles = styled.span`
@@ -86,5 +91,5 @@ export {
   DataContainer,
   TableStatsRow,
   PokeDataTableTitles,
-  PokeDataTableValues
+  PokeDataTableValues,
 };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import logo from '../../assets/pokebola_2.svg'
 
 import {
   Container,
@@ -9,7 +10,8 @@ import {
   PokedexTitle,
   PokedexDetailsContent,
   PokedexSearch,
-  Button
+  Button,
+  LoadingContent
 } from "./styles";
 
 import { getDataOfPokemon, getPokemons, getSpecificPokemons } from "../../services/api.js";
@@ -24,22 +26,25 @@ import { useHistory } from "react-router-dom";
 export default function Home() {
   const [getPokemon, setGetPokemon] = useState([]);
   const [search, setSearch] = useState("");
-  const [hasRefresh, setHasRefresh] = useState(true);
+  const [loading, setLoading] = useState(true);
   const history = useHistory();
 // console.log(searse)
   async function loadPokemon() {
     const data = await getPokemons();
     console.log(data);
     setGetPokemon(data);
-    // setHasRefresh(true)
+    setLoading(false)
   }
 
   async function getSinglePokemon(nameOrID) {
+    setLoading(true)
     const res = await getSpecificPokemons(nameOrID)
     setGetPokemon(res)
+    setLoading(false)
   }
 
   async function handlePage(e, pokemon) {
+    setLoading(true)
     e.preventDefault();
     const dataPokemon = await getDataOfPokemon(pokemon.id);
     const obj = {
@@ -56,7 +61,8 @@ export default function Home() {
   }, []);
   return (
     <Container>
-      <MenuSection>
+
+      <MenuSection className="menu">
         <PokedexTitle>Pokédex</PokedexTitle>
         <PokedexDetailsContent>
           <p>
@@ -73,10 +79,17 @@ export default function Home() {
           <Button onClick={() => getSinglePokemon(search)}>Pesquisar</Button>
         </PokedexSearch>
       </MenuSection>
+{
+  loading ?
+<LoadingContent >
+  <img src={logo}/>
+  </LoadingContent>
+  :
 
-      <PokemonDisplay>
+      <PokemonDisplay className="pokeDisplay">
         {getPokemon.map((pokemon) => (
           <Card
+            className="card"
             onClick={(e) => handlePage(e, pokemon)}
             style={{ backgroundColor: pokemon.color }}
           >
@@ -116,6 +129,10 @@ export default function Home() {
           </Card>
         ))}
       </PokemonDisplay>
+}
+
+
+
     </Container>
   );
 }

@@ -75,6 +75,7 @@ export default function Pokemon({ location }) {
   return (
     <Container>
       <Poke
+        className="pokeContainer"
         style={{
           backgroundColor: pokemon.color,
           display: "flex",
