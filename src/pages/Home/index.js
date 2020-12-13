@@ -1,51 +1,159 @@
-import React, { useEffect, useState } from "react";
-import logo from '../../assets/pokebola_2.svg'
+import React from "react";
+import PropTypes from "prop-types";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import Hidden from "@material-ui/core/Hidden";
+import IconButton from "@material-ui/core/IconButton";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import MailIcon from "@material-ui/icons/Mail";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import SearchIcon from "@material-ui/icons/Search";
 
 import {
   Container,
-  MenuSection,
-  PokemonDisplay,
   Card,
-  TypeNamePokemon,
-  PokedexTitle,
-  PokedexDetailsContent,
-  PokedexSearch,
+  CardActions,
+  CardContent,
   Button,
-  LoadingContent
-} from "./styles";
+  Grid,
+  Paper,
+  FormControl,
+  InputLabel,
+  Input,
+  InputAdornment,
+} from "@material-ui/core";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import { getDataOfPokemon, getPokemons, getSpecificPokemons } from "../../services/api.js";
+import PokeballIcon from "../../components/DrawerIcon";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import {
+  getDataOfPokemon,
+  getPokemons,
+  getSpecificPokemons,
+} from "../../services/api";
+import { useEffect } from "react";
+import { LoadingContent, TypeNamePokemon } from "./styles";
+import {
+  capitalize,
+  formatNumber,
   getIconByType,
   getTypeIconColor,
-  formatNumber,
-  capitalize,
-} from "../../utils/utils.js";
-import { useHistory } from "react-router-dom";
+} from "../../utils/utils";
+import logo from "../../assets/pokedex.svg";
+import pokeball from "../../assets/pokebola_2.svg";
 
-export default function Home() {
+const drawerWidth = 280;
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+  },
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+  },
+  appBar: {
+    visibility: "hidden",
+    [theme.breakpoints.down("sm")]: {
+      visibility: "visible !important",
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth,
+    },
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
+  // necessary for content to be below app bar
+  toolbar: theme.mixins.toolbar,
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+
+  pokemon: {
+    width: "60%",
+    height: "60%",
+    marginLeft: "calc(220px / 4)",
+    /* right: 2px */
+  },
+  name: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: "18px",
+    opacity: 0.6,
+    marginLeft: "10px",
+    marginTop: "-6px",
+  },
+  card: {
+    outline: "none",
+    border: "none",
+    outline: "none",
+    boxShadow: "none",
+    cursor: "pointer",
+  },
+  imgPokemon: { width: "20px", marginRight: 2 },
+}));
+
+function ResponsiveDrawer(props) {
+  const { window } = props;
+  const classes = useStyles();
+  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [getPokemon, setGetPokemon] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [hasRefresh, setHasRefresh] = useState(true);
   const history = useHistory();
-// console.log(searse)
+
   async function loadPokemon() {
     const data = await getPokemons();
-    console.log(data);
+    // console.log(data);
+    // setHasRefresh(false);
     setGetPokemon(data);
-    setLoading(false)
+    setLoading(false);
   }
 
-  async function getSinglePokemon(nameOrID) {
-    setLoading(true)
-    const res = await getSpecificPokemons(nameOrID)
-    setGetPokemon(res)
-    setLoading(false)
+  async function getSinglePokemon() {
+    // e.preventDefault();
+    console.log("alo");
+    setLoading(true);
+    // setHasRefresh(true);
+    const res = await getSpecificPokemons(search);
+    setGetPokemon(res);
+    setLoading(false);
   }
 
   async function handlePage(e, pokemon) {
-    setLoading(true)
     e.preventDefault();
+    setLoading(true);
+    setHasRefresh(true);
     const dataPokemon = await getDataOfPokemon(pokemon.id);
     const obj = {
       pokemon,
@@ -57,82 +165,199 @@ export default function Home() {
 
   useEffect(() => {
     loadPokemon();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // if(hasRefresh) {
+    //   setHasRefresh(false)
+    // } else {
+    //   console.log("a")
+    // }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return (
-    <Container>
 
-      <MenuSection className="menu">
-        <PokedexTitle>Pokédex</PokedexTitle>
-        <PokedexDetailsContent>
-          <p>
-            The Pokédex contains detailed stats for every creature from the
-            Pokémon games.
-          </p>
-        </PokedexDetailsContent>
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-        <PokedexSearch style={{marginTop: 80, position: "relative"}}>
-          <input type="text" className="search" value={search}
-            onChange={e => setSearch(e.target.value)}
-          />
-          <span className="label_txt">Search</span>
-          <Button onClick={() => getSinglePokemon(search)}>Pesquisar</Button>
-        </PokedexSearch>
-      </MenuSection>
-{
-  loading ?
-<LoadingContent >
-  <img src={logo}/>
-  </LoadingContent>
-  :
-
-      <PokemonDisplay className="pokeDisplay">
-        {getPokemon.map((pokemon) => (
-          <Card
-            className="card"
-            onClick={(e) => handlePage(e, pokemon)}
-            style={{ backgroundColor: pokemon.color }}
+  const drawer = (
+    <div>
+      <div
+        style={{
+          position: "relative",
+          // border: "1px solid red",
+          height: "auto",
+          // width: "98%",
+          // margin: "0 auto",
+          overflow: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <img src={logo} style={{ width: "250px" }} />
+      </div>
+      <Divider />
+      <List>
+        <ListItem>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              getSinglePokemon();
+            }}
           >
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                margin: "4px 0px 0px 4px",
-              }}
-            >
-              {pokemon.types.map(({ type }) => (
-                <div
-                  style={{
-                    // border: "1px solid",
-                    backgroundColor: getTypeIconColor(type.name),
-                    borderRadius: 10,
-                    display: "flex",
-                    alignItems: "center",
-                    width: "auto",
-                    padding: "4px 6px 4px 6px",
-                    margin: 4,
-                  }}
-                >
-                  <img
-                    src={getIconByType(type.name)}
-                    alt={pokemon.name}
-                    style={{ width: "20px", marginRight: 2 }}
-                  />
-                  <TypeNamePokemon>{type.name}</TypeNamePokemon>
-                </div>
-              ))}
-            </div>
+            <FormControl className={classes.margin}>
+              <InputLabel htmlFor="input-with-icon-adornment">
+                Nome ou n pokedex
+              </InputLabel>
+              <Input
+                id="input-with-icon-adornment"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                }
+                onSubmitCapture
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </FormControl>
+          </form>
+        </ListItem>
+        <Divider />
+        <ListItem button>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="Type" />
+        </ListItem>
+      </List>
+    </div>
+  );
 
-            <img className="pokemon" src={pokemon.url} alt={pokemon.name} />
-            <p className="name">{formatNumber(pokemon.id)}</p>
-            <p className="name">{capitalize(pokemon.name)}</p>
-          </Card>
-        ))}
-      </PokemonDisplay>
-}
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
+  const bull = <span className={classes.bullet}>•</span>;
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <div style={{ position: "fixed" }} className={classes.appBar}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <PokeballIcon fontSize="large" />
+            {/* <MenuIcon /> */}
+          </IconButton>
+        </Toolbar>
+      </div>
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === "rtl" ? "right" : "left"}
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="css">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="permanent"
+            open
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+      </nav>
+      {loading ? (
+        <LoadingContent>
+          <img src={pokeball} />
+        </LoadingContent>
+      ) : (
+        <Container maxWidth="lg">
+          <Grid container spacing={3}>
+            {getPokemon.map((pokemon) => (
+              <Grid item xs={12} sm={4} lg={3}>
+                <Paper className={classes.paper}>
+                  <Card
+                    onClick={(e) => handlePage(e, pokemon)}
+                    style={{
+                      backgroundColor: pokemon.color,
+                      boxShadow: `0px 0px 6px 0px ${pokemon.color}`,
+                    }}
+                    className={classes.card}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        margin: "4px 0px 0px 4px",
+                      }}
+                    >
+                      {pokemon.types.map(({ type }) => (
+                        <div
+                          style={{
+                            // border: "1px solid",
+                            backgroundColor: getTypeIconColor(type.name),
+                            borderRadius: 10,
+                            display: "flex",
+                            alignItems: "center",
+                            width: "auto",
+                            padding: "4px 6px 4px 6px",
+                            margin: 4,
+                          }}
+                        >
+                          <img
+                            src={getIconByType(type.name)}
+                            alt={pokemon.name}
+                            className={classes.imgPokemon}
+                          />
+                          <TypeNamePokemon>{type.name}</TypeNamePokemon>
+                        </div>
+                      ))}
+                    </div>
 
-
-    </Container>
+                    <img
+                      className={classes.pokemon}
+                      src={pokemon.url}
+                      alt={pokemon.name}
+                    />
+                    <p className={classes.name}>{formatNumber(pokemon.id)}</p>
+                    <Typography variant="h4" className={classes.name}>
+                      {capitalize(pokemon.name)}
+                    </Typography>
+                  </Card>
+                </Paper>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      )}
+    </div>
   );
 }
+
+ResponsiveDrawer.propTypes = {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window: PropTypes.func,
+};
+
+export default ResponsiveDrawer;
