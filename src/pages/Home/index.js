@@ -288,7 +288,7 @@ function ResponsiveDrawer(props) {
           <Grid container spacing={3}>
             {getPokemon.map((pokemon) => (
               <Grid item xs={12} sm={4} lg={3}>
-                <Paper className={classes.paper}>
+                <Paper className={classes.paper} elevation={2}>
                   <Card
                     onClick={(e) => handlePage(e, pokemon)}
                     style={{
