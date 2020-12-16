@@ -338,7 +338,7 @@ export default function Pokemon({ location, match }) {
                   </Grid>
                   <Grid container item xs={12}>
                     <PokeDataContainer>
-                      <PokeDataTitles>Catch raGrowth Ratete</PokeDataTitles>
+                      <PokeDataTitles>Growth Ratete</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
                         {data.training.growth_rate}
                       </PokeDataValues>
