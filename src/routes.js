@@ -9,7 +9,7 @@ export default function Routes() {
     <BrowserRouter>
       <Switch>
         <Route path="/" component={Home} exact/>
-        <Route path="/pokemon" component={Pokemon}/>
+        <Route path="/pokemon/:idOrName" component={Pokemon}/>
       </Switch>
     </BrowserRouter>
   )

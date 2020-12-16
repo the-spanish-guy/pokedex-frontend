@@ -43,7 +43,7 @@ import {
   getTypeIconColor,
 } from "../../utils/utils";
 import logo from "../../assets/pokedex.svg";
-import pokeball from "../../assets/pokebola_2.svg";
+import CustomLoading from "../../components/Loading";
 
 const drawerWidth = 280;
 
@@ -155,7 +155,7 @@ function ResponsiveDrawer(props) {
       dataPokemon: [dataPokemon],
     };
 
-    history.push("/pokemon", obj);
+    history.push(`/pokemon/${pokemon.name}`, obj);
   }
 
   useEffect(() => {
@@ -280,9 +280,7 @@ function ResponsiveDrawer(props) {
         </Hidden>
       </nav>
       {loading ? (
-        <LoadingContent>
-          <img src={pokeball} />
-        </LoadingContent>
+        <CustomLoading />
       ) : (
         <Container maxWidth="lg">
           <Grid container spacing={3}>
