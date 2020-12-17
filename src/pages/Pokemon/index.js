@@ -117,12 +117,69 @@ export default function Pokemon({ location, match }) {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
+      // flexGrow: 1,
+      [theme.breakpoints.down("xs")]: {
+        position: "relative",
+        width: "100vw",
+        height: "auto",
+        borderBottomRightRadius: 50,
+        borderBottomLeftRadius: 50,
+        flexDirection: "row",
+        alignItems: "center",
+        flexWrap: "wrap",
+      },
     },
     cardDataPokemon: {
       padding: theme.spacing(2),
       textAlign: "center",
       height: "100%",
     },
+
+    imagePokemon: {
+      width: "80%",
+      textAlign: "center",
+      alignSelf: "center",
+      margin: "0 auto",
+      marginTop: "8px",
+      marginBottom: "8px",
+    },
+
+    containerIcons: {
+      top: 40,
+      left: 40,
+      display: "flex",
+      [theme.breakpoints.down("xs")]: {
+        alignItems: "center",
+        width: "100vw",
+        justifyContent: "center",
+        alignSelf: "center",
+      },
+    },
+
+    typeIcons: {
+      borderRadius: 10,
+      display: "flex",
+      alignItems: "center",
+      width: "auto",
+      padding: "6px 12px 6px 12px",
+      margin: 4,
+      [theme.breakpoints.down("xs")]: {
+        padding: "3px 6px 3px 6px",
+        "& img": {
+          marginRight: "4px !important",
+        },
+      },
+    },
+
+    namePokemon: {
+      width: "100%",
+      [theme.breakpoints.down("xs")]: {
+        "& p": {
+          fontSize: "38px",
+        },
+      },
+    },
+
     colorPrimary: {
       backgroundColor: pokemon.color,
     },
@@ -141,24 +198,12 @@ export default function Pokemon({ location, match }) {
         <>
           <Grid item xs={12} sm={6}>
             <Box component="div" className={classes.cardPokemon}>
-              <div
-                style={{
-                  top: 40,
-                  left: 40,
-                  display: "flex",
-                }}
-              >
+              <div className={classes.containerIcons}>
                 {pokemon.types.map(({ type }) => (
                   <div
+                    className={classes.typeIcons}
                     style={{
-                      // border: "1px solid",
                       backgroundColor: getTypeIconColor(type.name),
-                      borderRadius: 10,
-                      display: "flex",
-                      alignItems: "center",
-                      width: "auto",
-                      padding: "6px 12px 6px 12px",
-                      margin: 4,
                     }}
                   >
                     <img
@@ -173,9 +218,10 @@ export default function Pokemon({ location, match }) {
               <img
                 src={pokemon.url}
                 alt={pokemon.name}
-                style={{ width: "80%", margin: "0 auto"}}
+                // style={{ width: "100%"}}
+                className={classes.imagePokemon}
               />
-              <div>
+              <div className={classes.namePokemon}>
                 <h1 style={{ color: "white" }}>{formatNumber(pokemon.id)}</h1>
                 <NamePokemon>{pokemon.name}</NamePokemon>
               </div>
