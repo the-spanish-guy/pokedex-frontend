@@ -147,15 +147,16 @@ function ResponsiveDrawer(props) {
 
   async function handlePage(e, pokemon) {
     e.preventDefault();
-    setLoading(true);
-    setHasRefresh(true);
+    // setLoading(true);
+    // setHasRefresh(true);
     const dataPokemon = await getDataOfPokemon(pokemon.id);
     const obj = {
       pokemon,
       dataPokemon: [dataPokemon],
     };
-
+    
     history.push(`/pokemon/${pokemon.name}`, obj);
+    // setLoading(true);
   }
 
   useEffect(() => {

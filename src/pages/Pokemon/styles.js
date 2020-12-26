@@ -48,8 +48,8 @@ const DataContainer = styled.div`
 `;
 
 const PokeDataContainer = styled.div`
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: ${props => props.mTop || "20px"};
+  margin-bottom: ${props => props.mBottom || "20px"};
 `;
 
 const PokeDataTitles = styled.span`
@@ -58,7 +58,7 @@ const PokeDataTitles = styled.span`
 `;
 
 const PokeDataValues = styled.span`
-  margin: 0px 40px 0px 40px;
+  margin: ${ props => props.m || "0px 24px 0px 24px"};
   font-weight: 500;
   font-size: 16px;
 `;
