@@ -196,7 +196,7 @@ export default function Pokemon({ location, match }) {
         <CustomLoading />
       ) : (
         <>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6} style={{backgroundColor: "white"}}>
             <Box component="div" className={classes.cardPokemon}>
               <div className={classes.containerIcons}>
                 {pokemon.types.map(({ type }) => (
