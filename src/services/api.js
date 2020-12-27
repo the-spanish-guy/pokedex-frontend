@@ -11,10 +11,9 @@ const getPokemons = async (nameOrId = null) => {
       return res
     }
     const { data: { data: res } } = await pokeApi.get("/")
-    console.log(res)
     return res
   } catch (error) {
-    console.log("[ERROR] Erro while get info from api", error)
+    console.error("[ERROR] Erro while get info from api", error)
   }
 };
 
@@ -23,7 +22,7 @@ const getSpecificPokemons = async (nameOrId) => {
     const { data: { data: res } } = await pokeApi.get(`/${nameOrId}`)
     return res
   } catch (error) {
-    console.log("[ERROR] Erro while get info from api", error)
+    console.error("[ERROR] Erro while get info from api", error)
   }
 };
 
@@ -32,7 +31,7 @@ const getDataOfPokemon = async (id) => {
     const { data } = await pokeApi.get(`/pokemon/${id}`)
     return data
   } catch (error) {
-    console.log("[ERROR] Erro while get info from api", error)
+    console.error("[ERROR] Erro while get info from api", error)
   }
 };
 

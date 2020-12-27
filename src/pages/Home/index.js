@@ -35,7 +35,7 @@ import {
   getSpecificPokemons,
 } from "../../services/api";
 import { useEffect } from "react";
-import { LoadingContent, TypeNamePokemon } from "./styles";
+import { TypeNamePokemon } from "./styles";
 import {
   capitalize,
   formatNumber,
@@ -109,7 +109,6 @@ const useStyles = makeStyles((theme) => ({
   card: {
     outline: "none",
     border: "none",
-    outline: "none",
     boxShadow: "none",
     cursor: "pointer",
   },
@@ -124,22 +123,17 @@ function ResponsiveDrawer(props) {
   const [getPokemon, setGetPokemon] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
-  const [hasRefresh, setHasRefresh] = useState(true);
   const history = useHistory();
 
   async function loadPokemon() {
     const data = await getPokemons();
-    // console.log(data);
-    // setHasRefresh(false);
     setGetPokemon(data);
     setLoading(false);
   }
 
   async function getSinglePokemon() {
     // e.preventDefault();
-    console.log("alo");
     setLoading(true);
-    // setHasRefresh(true);
     const res = await getSpecificPokemons(search);
     setGetPokemon(res);
     setLoading(false);
@@ -161,12 +155,6 @@ function ResponsiveDrawer(props) {
 
   useEffect(() => {
     loadPokemon();
-    // if(hasRefresh) {
-    //   setHasRefresh(false)
-    // } else {
-    //   console.log("a")
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleDrawerToggle = () => {
@@ -188,7 +176,7 @@ function ResponsiveDrawer(props) {
           alignItems: "center",
         }}
       >
-        <img src={logo} style={{ width: "250px" }} />
+        <img src={logo} style={{ width: "250px" }} alt="logo" />
       </div>
       <Divider />
       <List>
@@ -210,7 +198,6 @@ function ResponsiveDrawer(props) {
                     <SearchIcon />
                   </InputAdornment>
                 }
-                onSubmitCapture
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
@@ -231,7 +218,6 @@ function ResponsiveDrawer(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
-  const bull = <span className={classes.bullet}>•</span>;
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -286,7 +272,7 @@ function ResponsiveDrawer(props) {
         <Container maxWidth="lg">
           <Grid container spacing={3}>
             {getPokemon.map((pokemon) => (
-              <Grid item xs={12} sm={4} lg={3}>
+              <Grid item xs={12} sm={4} lg={3} key={pokemon.id}>
                 <Paper className={classes.paper} elevation={2}>
                   <Card
                     onClick={(e) => handlePage(e, pokemon)}
@@ -305,6 +291,7 @@ function ResponsiveDrawer(props) {
                     >
                       {pokemon.types.map(({ type }) => (
                         <div
+                          key={type.name}
                           style={{
                             // border: "1px solid",
                             backgroundColor: getTypeIconColor(type.name),

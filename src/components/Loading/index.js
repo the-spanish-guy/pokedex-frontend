@@ -6,7 +6,7 @@ const CustomLoading = (props) => {
 
   return (
     <LoadingContent>
-      <img src={pokeball}/>
+      <img src={pokeball} alt="pokeball" />
     </LoadingContent>
   );
 };

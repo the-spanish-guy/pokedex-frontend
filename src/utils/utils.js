@@ -1,22 +1,3 @@
-// import bug from '../../../assets/icons/bug.svg'
-// import dark from '../../../assets/icons/dark.svg'
-// import dragon from '../../../assets/icons/dragon.svg'
-// import electric from '../../../assets/icons/electric.svg'
-// import fairy from '../../../assets/icons/fairy.svg'
-// import fighting from '../../../assets/icons/fighting.svg'
-// import fire from '../../../assets/icons/fire.svg'
-// import flying from '../../../assets/icons/flying.svg'
-// import ghost from '../../../assets/icons/ghost.svg'
-// import grass from '../../../assets/icons/grass.svg'
-// import ground from '../../../assets/icons/ground.svg'
-// import ice from '../../../assets/icons/ice.svg'
-// import normal from '../../../assets/icons/normal.svg'
-// import poison from '../../../assets/icons/poison.svg'
-// import psychic from '../../../assets/icons/psychic.svg'
-// import rock from '../../../assets/icons/rock.svg'
-// import steel from '../../../assets/icons/steel.svg'
-// import water from '../../../assets/icons/water.svg'
-
 const getColor = (type) => {
   switch (type) {
     case 'bug':
@@ -329,20 +310,18 @@ const getVulnarability = (type) => {
     resistencia = [];
     
   type.map(({type: t}) => {
-    console.log(t)
     const { vulnerability: v, resistent: r } = getEffectiveByType(t.name);
     vulnerabilidade.push(...v);
     resistencia.push(...r);
+    return true;
   })
-
-  // console.log(vulnerabilidade);
-  // console.log(resistencia);
   
   const weak = [];
   vulnerabilidade.map((v) => {
     if (!resistencia.includes(v)) {
       weak.push(v);
     }
+    return true;
   });
   const novaArr = weak.filter((este, i) => weak.indexOf(este) === i);
   return novaArr

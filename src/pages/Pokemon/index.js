@@ -27,28 +27,15 @@ import {
 import CustomLoading from "../../components/Loading";
 
 export default function Pokemon({ location, match }) {
-  // const datas = location.state;
   const { idOrName } = match.params;
-  console.log(match, location);
   const [pokemon, setPokemon] = useState({});
   const [dataPokemon, setDataPokemon] = useState([]);
   const [loading, setLoading] = useState(true);
   const [colorFirstType, setColorFirstType] = useState("");
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  async function getData() {
-    const [data] = await getSpecificPokemons(idOrName);
-    console.log(data);
-    const data_pokemon = await getDataOfPokemon(data.id);
-    const color = getTypeIconColor(data.types[0].type.name);
-    setPokemon(data);
-    setDataPokemon([data_pokemon]);
-    setColorFirstType(color);
-    setLoading(false);
+  async function handlePage(name) {
+    window.open(`/pokemon/${name}`, "_blank");
   }
-  // const { pokemon, dataPokemon } = datas;
-  console.log("TESTE");
-  console.log(pokemon.types);
   const getgenderSvg = (type) => {
     switch (type) {
       case "female":
@@ -68,7 +55,7 @@ export default function Pokemon({ location, match }) {
             />
           </svg>
         );
-        return <GenderFemale fill={colorFirstType} />;
+        return <GenderFemale fill={colorFirstType} key={type} />;
 
       case "male":
         const GenderMale = (prop) => (
@@ -87,17 +74,25 @@ export default function Pokemon({ location, match }) {
             />
           </svg>
         );
-        return <GenderMale fill={colorFirstType} />;
+        return <GenderMale fill={colorFirstType} key={type} />;
 
       default:
         return "#FF0000";
     }
   };
 
-  useEffect(async () => {
-    await getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  useEffect(() => {
+    async function getData() {
+      const [data] = await getSpecificPokemons(idOrName);
+      const data_pokemon = await getDataOfPokemon(data.id);
+      const color = getTypeIconColor(data.types[0].type.name);
+      setPokemon(data);
+      setDataPokemon([data_pokemon]);
+      setColorFirstType(color);
+      setLoading(false);
+    }
+    getData();
+  }, [idOrName]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -117,7 +112,7 @@ export default function Pokemon({ location, match }) {
       display: "flex",
       flexDirection: "column",
       justifyContent: "space-between",
-      // flexGrow: 1,
+
       [theme.breakpoints.down("xs")]: {
         position: "relative",
         width: "100vw",
@@ -196,11 +191,12 @@ export default function Pokemon({ location, match }) {
         <CustomLoading />
       ) : (
         <>
-          <Grid item xs={12} sm={6} style={{backgroundColor: "white"}}>
+          <Grid item xs={12} sm={6} style={{ backgroundColor: "white" }}>
             <Box component="div" className={classes.cardPokemon}>
               <div className={classes.containerIcons}>
                 {pokemon.types.map(({ type }) => (
                   <div
+                    key={type.name}
                     className={classes.typeIcons}
                     style={{
                       backgroundColor: getTypeIconColor(type.name),
@@ -218,7 +214,6 @@ export default function Pokemon({ location, match }) {
               <img
                 src={pokemon.url}
                 alt={pokemon.name}
-                // style={{ width: "100%"}}
                 className={classes.imagePokemon}
               />
               <div className={classes.namePokemon}>
@@ -229,9 +224,9 @@ export default function Pokemon({ location, match }) {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Paper elevation={0} className={classes.cardDataPokemon}>
-              {dataPokemon.map((data) => (
-                <Grid container>
-                  <Grid cotnainer item xs={12}>
+              {dataPokemon.map((data, index) => (
+                <Grid container key={index}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType }}
@@ -262,7 +257,9 @@ export default function Pokemon({ location, match }) {
                       <PokeDataValues m="0px 20px 0px 20px">
                         {data.poke_data.gender.map((t) =>
                           t === "unknow" ? (
-                            <span style={{ color: colorFirstType }}>{t}</span>
+                            <span style={{ color: colorFirstType }} key={t}>
+                              {t}
+                            </span>
                           ) : (
                             getgenderSvg(t)
                           )
@@ -295,9 +292,11 @@ export default function Pokemon({ location, match }) {
                         fontSize: "16px",
                         marginLeft: 10,
                       }}
+                      component={"span"}
+                      variant={"body2"}
                     >
                       {data.poke_data.abilities.map((a, index) => (
-                        <div>
+                        <div key={index}>
                           {index + 1}.{a.ability.name}{" "}
                           {a.is_hidden ? "(hidden ability)" : ""}
                         </div>
@@ -324,6 +323,7 @@ export default function Pokemon({ location, match }) {
                     >
                       {data.poke_data.weakness.map((w) => (
                         <div
+                          key={w}
                           style={{
                             backgroundColor: getTypeIconColor(w),
                             borderRadius: "50%",
@@ -345,7 +345,7 @@ export default function Pokemon({ location, match }) {
                     </PokeDataValues>
                   </Grid>
 
-                  <Grid cotnainer item xs={12}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType, marginTop: 40 }}
@@ -359,9 +359,9 @@ export default function Pokemon({ location, match }) {
                       <PokeDataTitles>Ev yiled</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
                         {data.training.ev_yield.map((e) => (
-                          <Typography variant="span">
+                          <span key={e.stat.name}>
                             {e.effort} {e.stat.name}
-                          </Typography>
+                          </span>
                         ))}
                       </PokeDataValues>
                     </PokeDataContainer>
@@ -399,7 +399,7 @@ export default function Pokemon({ location, match }) {
                     </PokeDataContainer>
                   </Grid>
 
-                  <Grid cotnainer item xs={12}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType, marginTop: 40 }}
@@ -413,7 +413,7 @@ export default function Pokemon({ location, match }) {
                       <PokeDataTitles>Egg groups</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
                         {data.breeding.egg_groups.map((e, index) => (
-                          <span style={{ marginRight: 4 }}>
+                          <span style={{ marginRight: 4 }} key={index}>
                             {e.name}
                             {index + 1 < data.breeding.egg_groups.length
                               ? ","
@@ -424,7 +424,7 @@ export default function Pokemon({ location, match }) {
                     </PokeDataContainer>
                   </Grid>
 
-                  <Grid cotnainer item xs={12}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType, marginTop: 40 }}
@@ -434,19 +434,17 @@ export default function Pokemon({ location, match }) {
                     </Typography>
                   </Grid>
 
-                  {/* <Grid cotnainer item xs={12}> */}
-
                   {data.base_stats.map((b, index) => (
-                    <>
-                      <Grid cotnainer item xs={3}>
+                    <Grid container key={index}>
+                      <Grid container item xs={3}>
                         <Typography>{b.stat.name}</Typography>
                       </Grid>
-                      <Grid cotnainer item xs={2}>
+                      <Grid container item xs={2}>
                         <Typography style={{ color: colorFirstType }}>
                           {b.base_stat}
                         </Typography>
                       </Grid>
-                      <Grid cotnainer item xs={6}>
+                      <Grid item xs={6}>
                         <LinearProgress
                           variant="determinate"
                           classes={{
@@ -456,22 +454,21 @@ export default function Pokemon({ location, match }) {
                           value={b.base_stat}
                         />
                       </Grid>
-                    </>
+                    </Grid>
                   ))}
-                  {/* </Grid> */}
 
-                  <Grid cotnainer item xs={12}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType, marginTop: 40 }}
                       align="left"
                     >
                       Type
-                    </Typography>
-
-                    <Typography>
-                      The effectiveness of each type on{" "}
-                      {capitalize(pokemon.name)}.
+                      <br />
+                      <Typography style={{ color: "black" }}>
+                        The effectiveness of each type on{" "}
+                        {capitalize(pokemon.name)}.
+                      </Typography>
                     </Typography>
                   </Grid>
                   <Grid item xs={12} container>
@@ -484,8 +481,11 @@ export default function Pokemon({ location, match }) {
                       }}
                       m={1}
                     >
-                      {data.type.map((w) => (
-                        <div style={{ textAlign: "center", marginBottom: 12 }}>
+                      {data.type.map((w, index) => (
+                        <div
+                          style={{ textAlign: "center", marginBottom: 12 }}
+                          key={index}
+                        >
                           <div
                             style={{
                               backgroundColor: getTypeIconColor(w.name_type),
@@ -510,7 +510,7 @@ export default function Pokemon({ location, match }) {
                     </Box>
                   </Grid>
 
-                  <Grid cotnainer item xs={12}>
+                  <Grid container item xs={12}>
                     <Typography
                       variant="h4"
                       style={{ color: colorFirstType, marginTop: 40 }}
@@ -523,8 +523,13 @@ export default function Pokemon({ location, match }) {
                   <Grid container direction="row" spacing={4} justify="center">
                     {data.evolves.map((t, index) =>
                       t.name ? (
-                        <Grid item xs={12} sm={3}>
-                          <img src={t.url} style={{ width: "100%" }} />
+                        <Grid item xs={12} sm={3} key={index}>
+                          <img
+                            src={t.url}
+                            style={{ width: "100%", cursor: "pointer" }}
+                            alt={t.name}
+                            onClick={() => handlePage(t.name)}
+                          />
                         </Grid>
                       ) : (
                         <span>{t}</span>
