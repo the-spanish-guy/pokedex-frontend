@@ -356,11 +356,14 @@ export default function Pokemon({ location, match }) {
                   </Grid>
                   <Grid container item xs={12}>
                     <PokeDataContainer mBottom="0px">
-                      <PokeDataTitles>Ev yiled</PokeDataTitles>
+                      <PokeDataTitles>Ev yield</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
-                        {data.training.ev_yield.map((e) => (
+                        {data.training.ev_yield.map((e, index) => (
                           <span key={e.stat.name}>
                             {e.effort} {e.stat.name}
+                            {index + 1 < data.training.ev_yield.length
+                              ? ","
+                              : ""}
                           </span>
                         ))}
                       </PokeDataValues>
@@ -412,14 +415,50 @@ export default function Pokemon({ location, match }) {
                     <PokeDataContainer mTop="10px" mBottom="0px">
                       <PokeDataTitles>Egg groups</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
-                        {data.breeding.egg_groups.map((e, index) => (
-                          <span style={{ marginRight: 4 }} key={index}>
-                            {e.name}
-                            {index + 1 < data.breeding.egg_groups.length
-                              ? ","
-                              : ""}
-                          </span>
-                        ))}
+                        {data.breeding.egg_groups.map((e, index) =>
+                          data.breeding.egg_groups.length > 1 ? (
+                            <span style={{ marginRight: 4 }} key={index}>
+                              {e.name}
+                              {index + 1 < data.breeding.egg_groups.length
+                                ? ","
+                                : ""}
+                            </span>
+                          ) : (
+                            <span style={{ marginRight: 4 }} key={index}>
+                              {e}
+                            </span>
+                          )
+                        )}
+                      </PokeDataValues>
+                    </PokeDataContainer>
+                  </Grid>
+                  <Grid container item xs={12}>
+                    <PokeDataContainer mTop="10px" mBottom="0px">
+                      <PokeDataTitles>Gender</PokeDataTitles>
+                      <PokeDataValues style={{ color: colorFirstType }}>
+                        {data.breeding.gender_rate.map((rate, index) =>
+                          data.breeding.gender_rate.length > 1 ? (
+                            <span
+                              style={{
+                                marginRight: 4,
+                                color: index === 0 ? "#539DDF" : "#EF90E6",
+                              }}
+                              key={index}
+                            >
+                              {rate.rate}% {rate.name}
+                              {index + 1 < data.breeding.gender_rate.length
+                                ? ","
+                                : ""}
+                            </span>
+                          ) : (
+                            <span
+                              style={{ marginRight: 4, color: "#595761" }}
+                              key={index}
+                            >
+                              {rate}
+                            </span>
+                          )
+                        )}
                       </PokeDataValues>
                     </PokeDataContainer>
                   </Grid>
