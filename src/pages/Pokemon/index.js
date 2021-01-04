@@ -83,7 +83,7 @@ export default function Pokemon({ location, match }) {
 
   useEffect(() => {
     async function getData() {
-      const [data] = await getSpecificPokemons(idOrName);
+      const data = await getSpecificPokemons(idOrName);
       const data_pokemon = await getDataOfPokemon(data.id);
       const color = getTypeIconColor(data.types[0].type.name);
       setPokemon(data);
@@ -415,20 +415,14 @@ export default function Pokemon({ location, match }) {
                     <PokeDataContainer mTop="10px" mBottom="0px">
                       <PokeDataTitles>Egg groups</PokeDataTitles>
                       <PokeDataValues style={{ color: colorFirstType }}>
-                        {data.breeding.egg_groups.map((e, index) =>
-                          data.breeding.egg_groups.length > 1 ? (
-                            <span style={{ marginRight: 4 }} key={index}>
-                              {e.name}
-                              {index + 1 < data.breeding.egg_groups.length
-                                ? ","
-                                : ""}
-                            </span>
-                          ) : (
-                            <span style={{ marginRight: 4 }} key={index}>
-                              {e}
-                            </span>
-                          )
-                        )}
+                        {data.breeding.egg_groups.map((e, index) => (
+                          <span style={{ marginRight: 4 }} key={index}>
+                            {e.name}
+                            {index + 1 < data.breeding.egg_groups.length
+                              ? ","
+                              : ""}
+                          </span>
+                        ))}
                       </PokeDataValues>
                     </PokeDataContainer>
                   </Grid>

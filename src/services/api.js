@@ -19,7 +19,7 @@ const getPokemons = async (nameOrId = null) => {
 
 const getSpecificPokemons = async (nameOrId) => {
   try {
-    const { data: { data: res } } = await pokeApi.get(`/${nameOrId}`)
+    const { data: res } = await pokeApi.get(`/${nameOrId}`)
     return res
   } catch (error) {
     console.error("[ERROR] Erro while get info from api", error)
