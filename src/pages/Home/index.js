@@ -135,7 +135,7 @@ function ResponsiveDrawer(props) {
     // e.preventDefault();
     setLoading(true);
     const res = await getSpecificPokemons(search);
-    setGetPokemon(res);
+    setGetPokemon([res]);
     setLoading(false);
   }
 
