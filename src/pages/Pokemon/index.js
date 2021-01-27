@@ -4,6 +4,7 @@ import {
   getIconByType,
   getTypeIconColor,
   capitalize,
+  hexToRgbA,
 } from "../../utils/utils";
 
 import {
@@ -25,6 +26,7 @@ import {
   PokeDataContainer,
 } from "./styles";
 import CustomLoading from "../../components/Loading";
+import RadarChart from "../../components/Chart/RadarChart";
 
 export default function Pokemon({ location, match }) {
   const { idOrName } = match.params;
@@ -466,29 +468,14 @@ export default function Pokemon({ location, match }) {
                       Base Stats
                     </Typography>
                   </Grid>
-
-                  {data.base_stats.map((b, index) => (
-                    <Grid container key={index}>
-                      <Grid container item xs={3}>
-                        <Typography>{b.stat.name}</Typography>
-                      </Grid>
-                      <Grid container item xs={2}>
-                        <Typography style={{ color: colorFirstType }}>
-                          {b.base_stat}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                        <LinearProgress
-                          variant="determinate"
-                          classes={{
-                            colorPrimary: classes.colorPrimary,
-                            barColorPrimary: classes.barColorPrimary,
-                          }}
-                          value={b.base_stat}
-                        />
-                      </Grid>
-                    </Grid>
-                  ))}
+                  <Grid container item xs={12}>
+                    <RadarChart
+                      data={data.base_stats}
+                      name={pokemon.name}
+                      bgColor={hexToRgbA(pokemon.color, 0.4)}
+                      borderColor={colorFirstType}
+                    />
+                  </Grid>
 
                   <Grid container item xs={12}>
                     <Typography
@@ -521,7 +508,9 @@ export default function Pokemon({ location, match }) {
                         >
                           <div
                             style={{
-                              backgroundColor: getTypeIconColor(w.name_type),
+                              backgroundColor: getTypeIconColor(
+                                w.type.toLowerCase()
+                              ),
                               borderRadius: "50%",
                               display: "flex",
                               alignItems: "center",
@@ -532,12 +521,12 @@ export default function Pokemon({ location, match }) {
                             }}
                           >
                             <img
-                              src={getIconByType(w.name_type)}
+                              src={getIconByType(w.type.toLowerCase())}
                               style={{ width: "70%" }}
                               alt={w.name_type}
                             />
                           </div>
-                          <span>{w.effective}</span>
+                          <span>{w.value}</span>
                         </div>
                       ))}
                     </Box>
