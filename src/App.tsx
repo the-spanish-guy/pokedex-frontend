@@ -1,6 +1,7 @@
 import { AppRoutes } from './Routes'
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import customtheme from './styles/theme'
+import './styles/fonts.css'
 
 function App() {
   return (

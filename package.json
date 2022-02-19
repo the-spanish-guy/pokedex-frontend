@@ -1,6 +1,12 @@
 {
-  "name": "boilerplate-react-vite",
+  "name": "pokedex",
   "version": "1.0.0",
+  "homepage": "https://github.com/the-spanish-guy/pokedex-frontend/blob/main/README.md",
+  "author": {
+    "name": "Luis Enrique MP",
+    "email": "luyo.lemp@gmail.com",
+    "url": "https://github.com/the-spanish-guy/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
