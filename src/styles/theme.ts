@@ -24,7 +24,7 @@ const customtheme = extendTheme({
       400: '#292929',
       500: '#000000'
     },
-    white: {
+    whiteAlpha: {
       ...theme.colors.whiteAlpha,
       500: '#FFFFFF',
       600: '#F5F5F5',
