@@ -22,16 +22,27 @@ export const pokemonTypes = {
 }
 
 type teste = {
-  color: string
   type: string
+  color: string
+  darkColor: string
+  reverseColor: string
 }
 export const getInfoColors = (): teste => {
   const index: string[] = Object.keys(allPokemonColors)
 
   const randomIndex = Math.floor(Math.random() * index.length)
+  const currentIndex = index[randomIndex]
+  const type = index[randomIndex].split('-')[1]
+  const darkIndex = `dark-${type}`
+  const reverseIndex = currentIndex.match(`dark-${type}`)
+    ? `light-${type}`
+    : `dark-${type}`
+  const reverseColor = allPokemonColors[reverseIndex]
 
   return {
-    color: allPokemonColors[index[randomIndex]],
-    type: index[randomIndex].split('-')[1]
+    type,
+    reverseColor,
+    darkColor: allPokemonColors[darkIndex],
+    color: allPokemonColors[index[randomIndex]]
   }
 }
