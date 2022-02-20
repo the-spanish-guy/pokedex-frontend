@@ -48,13 +48,18 @@ export function Home() {
           width="14rem"
           mb="109px"
         >
-          <Heading fontSize="xs" fontWeight="medium">
+          <Heading
+            fontSize="xs"
+            fontWeight="medium"
+            transform="rotate(180deg)"
+            mr="10px"
+          >
             scroll for more
           </Heading>
           <Box
             as="div"
             width="91px"
-            height="1px"
+            height="2px"
             bgColor="whiteAlpha.500"
             position="relative"
           />
