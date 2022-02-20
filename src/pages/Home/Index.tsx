@@ -5,6 +5,7 @@ import { Box, Center, Heading, HStack, Image, Text } from '@chakra-ui/react'
 import useStore from '@/stores/useStore'
 import LayoutComponent from '@/components/Layout'
 import { getIconByName } from '@/utils/IconUtils'
+import HeaderComponent from '@/components/Header'
 import { getInfoColors } from '@/utils/PokemonUtils'
 
 import Pokedex from '@/assets/cover.png'
@@ -124,6 +125,7 @@ export function Home() {
           </Heading>
         </Box>
       </HStack>
+      <HeaderComponent />
       {/* <ToggleThemeButton /> */}
     </LayoutComponent>
   )
