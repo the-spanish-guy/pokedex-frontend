@@ -145,6 +145,7 @@ const customtheme = extendTheme({
   },
   fontSize: {
     ...theme.fontSizes,
+    xs: '16px',
     sm: '20px',
     md: '24px',
     lg: '32px',
