@@ -32,6 +32,10 @@ module.exports = {
     {
       value: ':green_heart: ci',
       name: '💚 ci:\tAdd or update regards to build process'
+    },
+    {
+      value: ':bento: assets',
+      name: '🍱 assets:\tAdd or update assets'
     }
   ],
   scopes: [{ name: 'routes' }, { name: 'hooks' }, { name: 'components' }],
