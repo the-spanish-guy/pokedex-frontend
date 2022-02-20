@@ -1,5 +1,6 @@
 import { extendTheme, theme, ThemeConfig } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
+import { allPokemonColors } from '@/utils/ColorUitls'
 
 const config: ThemeConfig = {
   initialColorMode: 'dark',
@@ -59,76 +60,76 @@ const customtheme = extendTheme({
       900: '#08600A'
     },
     bug: {
-      300: '#C5DC90',
-      500: '#92BD2D'
+      300: allPokemonColors['light-bug'],
+      500: allPokemonColors['dark-bug']
     },
     dark: {
-      300: '#A7A6AB',
-      500: '#595761'
+      300: allPokemonColors['light-dark'],
+      500: allPokemonColors['dark-dark']
     },
     dragon: {
-      300: '#7FB0E2',
-      500: '#0C6AC8'
+      300: allPokemonColors['light-dragon'],
+      500: allPokemonColors['dark-dragon']
     },
     electric: {
-      300: '#F8EBA1',
-      500: '#F2D94E'
+      300: allPokemonColors['light-electric'],
+      500: allPokemonColors['dark-electric']
     },
     fairy: {
-      300: '#F6C4F1',
-      500: '#EF90E6'
+      300: allPokemonColors['light-fairy'],
+      500: allPokemonColors['dark-fairy']
     },
     fighting: {
-      300: '#E79BAA',
-      500: '#D3425F'
+      300: allPokemonColors['light-fighting'],
+      500: allPokemonColors['dark-fighting']
     },
     fire: {
-      300: '#FCD0A0',
-      500: '#FBA64C'
+      300: allPokemonColors['light-fire'],
+      500: allPokemonColors['dark-fire']
     },
     flying: {
-      300: '#CDDBF5',
-      500: '#A1BBEC'
+      300: allPokemonColors['light-flying'],
+      500: allPokemonColors['dark-flying']
     },
     ghost: {
-      300: '#AAB2DB',
-      500: '#5F6DBC'
+      300: allPokemonColors['light-ghost'],
+      500: allPokemonColors['dark-ghost']
     },
     grass: {
-      300: '#ABDCA7',
-      500: '#60BD58'
+      300: allPokemonColors['light-grass'],
+      500: allPokemonColors['dark-grass']
     },
     ground: {
-      300: '#EBBAA1',
-      500: '#DA7C4D'
+      300: allPokemonColors['light-ground'],
+      500: allPokemonColors['dark-ground']
     },
     ice: {
-      300: '#B6E6DE',
-      500: '#76D1C1'
+      300: allPokemonColors['light-ice'],
+      500: allPokemonColors['dark-ice']
     },
     normal: {
-      300: '#CDCECC',
-      500: '#A0A29F'
+      300: allPokemonColors['light-normal'],
+      500: allPokemonColors['dark-normal']
     },
     poison: {
-      300: '#D9ACE5',
-      500: '#B763CF'
+      300: allPokemonColors['light-poison'],
+      500: allPokemonColors['dark-poison']
     },
     psychic: {
-      300: '#FCBEBD',
-      500: '#FA8582'
+      300: allPokemonColors['light-psychic'],
+      500: allPokemonColors['dark-psychic']
     },
     rock: {
-      300: '#E2DBC1',
-      500: '#C9BC8A'
+      300: allPokemonColors['light-rock'],
+      500: allPokemonColors['dark-rock']
     },
     steel: {
-      300: '#A6C7CE',
-      500: '#5795A3'
+      300: allPokemonColors['light-steel'],
+      500: allPokemonColors['dark-steel']
     },
     water: {
-      300: '#A4CBEE',
-      500: '#539DDF'
+      300: allPokemonColors['light-water'],
+      500: allPokemonColors['dark-water']
     }
   },
   fonts: {
@@ -143,7 +144,7 @@ const customtheme = extendTheme({
     semibold: 600,
     bold: 700
   },
-  fontSize: {
+  fontSizes: {
     ...theme.fontSizes,
     xs: '16px',
     sm: '20px',
