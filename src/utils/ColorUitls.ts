@@ -26,7 +26,7 @@ export const pokemonColors: Record<string, string> = {
   electric: '#F2D94E',
   fairy: '#EF90E6',
   fighting: '#D3425F',
-  fire: '#E2763E',
+  fire: '#FBA64C',
   flying: '#A1BBEC',
   ghost: '#5F6DBC',
   grass: '#60BD58',
