@@ -1,43 +1,47 @@
-import { BsSunFill } from 'react-icons/bs'
-import { GiMoonBats } from 'react-icons/gi'
-import { Box, Flex, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import useStore from '@/stores/useStore'
+import {
+  Flex,
+  ScaleFade,
+  useColorMode,
+  useColorModeValue
+} from '@chakra-ui/react'
+import { DarkIcon, ElectricIcon } from '../Icons'
 
-export const ToggleThemeButton = () => {
+const Toggle = ({ fadeIn }: { fadeIn: boolean }) => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <Box
-      as="div"
-      position="absolute"
-      w="64px"
-      h="64px"
-      right="12px"
-      bottom="12px"
-      bgColor={useColorModeValue('#5e69ee', '#F4F4FB')}
-      rounded="9999px"
-      onClick={toggleColorMode}
-      boxShadow="lg"
-      cursor="pointer"
-    >
+    <ScaleFade initialScale={0.4} in={fadeIn}>
       <Flex
         as="div"
+        w="80px"
+        h="80px"
+        left="12px"
+        bottom="12px"
+        boxShadow="lg"
+        position="fixed"
+        rounded="9999px"
+        cursor="pointer"
         alignItems="center"
         justifyContent="center"
-        w="64px"
-        h="64px"
+        onClick={toggleColorMode}
+        bgColor={useColorModeValue('#262B35', '#2C3444')}
       >
         {colorMode === 'dark' ? (
-          <BsSunFill
-            size={30}
-            color={useColorModeValue('#F4F4FB', '#5e69ee')}
-          />
+          <ElectricIcon fontSize={32} fill="#F2D94E" />
         ) : (
-          <GiMoonBats
-            size={30}
-            color={useColorModeValue('#F4F4FB', '#5e69ee')}
+          <DarkIcon
+            fontSize={32}
+            fill={useColorModeValue('#FFFFFF', '#262B35')}
           />
         )}
       </Flex>
-    </Box>
+    </ScaleFade>
   )
+}
+
+export const ToggleThemeButton = () => {
+  const { inViewPort } = useStore()
+
+  return inViewPort ? <></> : <Toggle fadeIn={!inViewPort} />
 }

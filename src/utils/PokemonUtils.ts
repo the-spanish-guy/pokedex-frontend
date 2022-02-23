@@ -1,4 +1,4 @@
-import { allPokemonColors } from './ColorUitls'
+import { allPokemonColors } from './ColorUtils'
 
 export const pokemonTypes = {
   bug: 'bug',

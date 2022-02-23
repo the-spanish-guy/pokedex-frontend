@@ -1,21 +1,37 @@
 import { useLayoutEffect, useState } from 'react'
-import { Box, Center, Heading, HStack, Image, Text } from '@chakra-ui/react'
-// import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
+import {
+  Box,
+  Flex,
+  Text,
+  Image,
+  HStack,
+  Center,
+  Heading,
+  Container
+} from '@chakra-ui/react'
 
 import useStore from '@/stores/useStore'
+import Pokedex from '@/assets/cover.png'
 import LayoutComponent from '@/components/Layout'
 import { getIconByName } from '@/utils/IconUtils'
+import HeaderComponent from '@/components/Header'
 import { getInfoColors } from '@/utils/PokemonUtils'
-
-import Pokedex from '@/assets/cover.png'
+import PokemonService from '@/services/PokemonService'
+import FooterComponent from '@/components/Footer/Index'
+import ViewportBlock from '@/components/Viewport/Index'
+import CardPokemonComponent from '@/components/CardPokemon'
+import { ScrollToTop } from '@/components/ScrollToTop/Index'
+import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
+import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
   const [darkColor, setDarkColor] = useState<string>()
   const [pokemonType, setPokemonType] = useState<string>()
   const [reverseColor, setReverseColor] = useState<string>()
+  const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
 
-  const { setglobalBgColor } = useStore()
+  const { setglobalBgColor, setInViewPort } = useStore()
 
   const getInfos = () => {
     const { color, type, darkColor, reverseColor } = getInfoColors()
@@ -26,12 +42,25 @@ export function Home() {
     setglobalBgColor(color)
     setReverseColor(reverseColor)
   }
+
+  const getPokemons = async () => {
+    const pokemonService = new PokemonService()
+    const res = await pokemonService.getPokemons()
+    console.log(res)
+    setPokemons(res)
+  }
+
   useLayoutEffect(() => {
     getInfos()
+    getPokemons()
   }, [])
 
   return (
     <LayoutComponent title="Home">
+      <ViewportBlock
+        onLeaveViewport={() => setInViewPort(false)}
+        onEnterViewport={() => setInViewPort(true)}
+      />
       <HStack
         backgroundColor={bgColor}
         width="100%"
@@ -124,7 +153,33 @@ export function Home() {
           </Heading>
         </Box>
       </HStack>
-      {/* <ToggleThemeButton /> */}
+      <HeaderComponent />
+
+      <Container maxW="90%">
+        <Flex
+          flexDirection="row"
+          width="100%"
+          height="auto"
+          flexWrap="wrap"
+          justifyContent="center"
+        >
+          {pokemons?.map((pokemon, index) => (
+            <Box w="384px" mr="75px" mb="64px" h="auto" key={index}>
+              <CardPokemonComponent
+                name={pokemon.name}
+                id={pokemon.id}
+                color={pokemon.color}
+                images={pokemon.images}
+                types={pokemon.types}
+                info={pokemon.info}
+              />
+            </Box>
+          ))}
+        </Flex>
+      </Container>
+      <FooterComponent />
+      <ToggleThemeButton />
+      <ScrollToTop />
     </LayoutComponent>
   )
 }

@@ -78,3 +78,32 @@ export const allPokemonColors: Record<string, string> = {
   'dark-fighting': pokemonColors.fighting,
   'dark-electric': pokemonColors.electric
 }
+
+export const hexToRgbA = (hex: string | any, opacity: number | string) => {
+  console.log({ hex })
+  let c: string[] | string | any
+  if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    c = hex.substring(1).split('')
+    if (c.length === 3) {
+      c = [c[0], c[0], c[1], c[1], c[2], c[2]]
+    }
+    c = '0x' + c.join('')
+    return (
+      'rgba(' +
+      [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') +
+      ',' +
+      opacity +
+      ')'
+    )
+  }
+  throw new Error('Bad Hex')
+}
+
+export const getColorByType = (type: string): string => {
+  console.log('type chegando: ', type)
+  return pokemonColors[type]
+}
+
+export const getLightColorByType = (type: string): string => {
+  return pokemonColors[type]
+}
