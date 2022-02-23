@@ -1,6 +1,6 @@
 import { extendTheme, theme, ThemeConfig } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
-import { allPokemonColors } from '@/utils/ColorUitls'
+import { allPokemonColors } from '@/utils/ColorUtils'
 
 const config: ThemeConfig = {
   initialColorMode: 'dark',
