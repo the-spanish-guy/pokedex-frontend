@@ -1,4 +1,12 @@
-import { Box, chakra, Divider, Flex, Link, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Flex,
+  Link,
+  Text,
+  chakra,
+  Divider,
+  useColorModeValue
+} from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import { IconHeart } from '@tabler/icons'
 import { motion } from 'framer-motion'
@@ -11,27 +19,38 @@ const FooterComponent = (): ReactElement => {
       w="100%"
       h="411px"
       maxH="411px"
-      bgColor="whiteAlpha.600"
+      bgColor={useColorModeValue('whiteAlpha.600', '#2B3240')}
       color="blackAlpha.500"
       flexDirection="column"
       p="70px"
     >
       <Flex>
         <Box>
-          <Text fontFamily="Montserrat" fontSize="24px" fontWeight={400}>
+          <Text
+            fontFamily="Montserrat"
+            fontSize="24px"
+            fontWeight={400}
+            color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+          >
             Designed by Bruna Campos
           </Text>
-          <Text fontFamily="Montserrat" fontSize="24px" fontWeight={400}>
+          <Text
+            fontFamily="Montserrat"
+            fontSize="24px"
+            fontWeight={400}
+            color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+          >
             Coded by Luis Enrique Meza
           </Text>
         </Box>
 
         <Divider
           orientation="vertical"
-          bgColor="blackAlpha.500"
+          bgColor={useColorModeValue('blackAlpha.300', 'whiteAlpha.500')}
           mr="65px"
           ml="65px"
         />
+
         <Box>
           <Link
             fontFamily="Montserrat"
@@ -40,6 +59,7 @@ const FooterComponent = (): ReactElement => {
             textDecoration="underline"
             href="https://www.behance.net/brucampos"
             isExternal
+            color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
           >
             Behance
           </Link>
@@ -51,15 +71,28 @@ const FooterComponent = (): ReactElement => {
             textDecoration="underline"
             href="https://github.com/the-spanish-guy/"
             isExternal
+            color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
           >
             Github
           </Link>
         </Box>
       </Flex>
-      <Divider bgColor="blackAlpha.300" mt="88px" mb="49px" />
+
+      <Divider
+        bgColor={useColorModeValue('blackAlpha.300', 'whiteAlpha.500')}
+        mt="88px"
+        mb="49px"
+      />
+
       <Flex flexDirection="row" justifyContent="space-between">
         <Flex alignItems="center">
-          <Text fontFamily="Montserrat" fontSize="24px" fontWeight={400}>
+          <Text
+            fontFamily="Montserrat"
+            fontSize="24px"
+            fontWeight={400}
+            mr="10px"
+            color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+          >
             /Made with
           </Text>
           <motion.div
@@ -83,7 +116,11 @@ const FooterComponent = (): ReactElement => {
             <CustomIconHeart fill="red.500" stroke="red.500" />
           </motion.div>
         </Flex>
-        <Text fontFamily="Montserrat" fontSize="24px">
+        <Text
+          fontFamily="Montserrat"
+          fontSize="24px"
+          color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+        >
           Copyright 2022©
         </Text>
       </Flex>

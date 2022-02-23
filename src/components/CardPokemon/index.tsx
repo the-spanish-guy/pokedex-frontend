@@ -30,7 +30,7 @@ const CardPokemonComponent: FC<Props> = ({
     <Flex
       w="384px"
       h="437px"
-      bgColor={useColorModeValue('#FFFFFF', '#262B35')}
+      bgColor={useColorModeValue('#FFFFFF', '#2B3240')}
       boxShadow="0px 16px 40px rgba(112, 144, 176, 0.2)"
       borderRadius="4px"
       bgImage={Pokeball}

@@ -1,10 +1,10 @@
 import useStore from '@/stores/useStore'
-import { Flex, chakra, ScaleFade, useColorModeValue } from '@chakra-ui/react'
+import { Flex, chakra, ScaleFade } from '@chakra-ui/react'
 import { IconArrowNarrowUp } from '@tabler/icons'
 
 const ChakraIconSrrowNarrowUp = chakra(IconArrowNarrowUp)
 
-const Scroll = ({ fadeIn }: { fadeIn: boolean }) => {
+const Scroll = ({ fadeIn, color }: { fadeIn: boolean; color: string }) => {
   const scrollToTop = () => {
     console.log(window.outerHeight)
     window.scroll({ top: 0, left: 0, behavior: 'smooth' })
@@ -18,22 +18,26 @@ const Scroll = ({ fadeIn }: { fadeIn: boolean }) => {
         right="12px"
         bottom="12px"
         boxShadow="lg"
+        bgColor={color}
         position="fixed"
         rounded="9999px"
         cursor="pointer"
         alignItems="center"
         onClick={scrollToTop}
         justifyContent="center"
-        bgColor={useColorModeValue('#262B35', '#2C3444')}
       >
-        <ChakraIconSrrowNarrowUp fontSize="21px" />
+        <ChakraIconSrrowNarrowUp
+          size="60px"
+          strokeWidth="1.5px"
+          color="whiteAlpha.500"
+        />
       </Flex>
     </ScaleFade>
   )
 }
 
-export const ScrollToTop = () => {
+export const ScrollToTop = ({ color }: { color: string }) => {
   const { inViewPort } = useStore()
 
-  return inViewPort ? <></> : <Scroll fadeIn={!inViewPort} />
+  return inViewPort ? <></> : <Scroll fadeIn={!inViewPort} color={color} />
 }

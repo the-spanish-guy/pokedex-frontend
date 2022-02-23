@@ -179,7 +179,7 @@ export function Home() {
       </Container>
       <FooterComponent />
       <ToggleThemeButton />
-      <ScrollToTop />
+      <ScrollToTop color={bgColor as string} />
     </LayoutComponent>
   )
 }

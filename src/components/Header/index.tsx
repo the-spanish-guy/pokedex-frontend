@@ -4,7 +4,8 @@ import {
   Heading,
   Input,
   InputGroup,
-  InputLeftElement
+  InputLeftElement,
+  useColorModeValue
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
 import { IconSearch } from '@tabler/icons'
@@ -15,7 +16,7 @@ const HeaderComponent = (): ReactElement => {
   return (
     <Box
       display="flex"
-      bgColor="whiteAlpha.600"
+      bgColor={useColorModeValue('whiteAlpha.600', '#2B3240')}
       pt="35px"
       pb="35px"
       width="100%"
@@ -23,34 +24,35 @@ const HeaderComponent = (): ReactElement => {
       justifyContent="space-around"
       alignItems="flex-end"
     >
-      <Heading color="blackAlpha.300">
+      <Heading color={useColorModeValue('blackAlpha.300', 'whiteAlpha.500')}>
         Find your
         <br />
         pokémon
       </Heading>
-
       <InputGroup
-        width="357px"
-        height="56px"
-        bgColor="whiteAlpha.500"
-        borderRadius="8px"
+        size="lg"
+        width={'auto'}
+        variant={'filled'}
+        bgColor={useColorModeValue('whiteAlpha.500', '#3C4555')}
       >
         <InputLeftElement
           pointerEvents="none"
-          children={<SearchIconTest size="18px" color="blackAlpha.300" />}
-          mt="3px"
-          __css={{
-            padding: '16px'
-          }}
+          children={
+            <SearchIconTest
+              size="18px"
+              color={useColorModeValue('blackAlpha.300', 'whiteAlpha.500')}
+            />
+          }
         />
         <Input
           type="text"
+          htmlSize={32}
+          width={'auto'}
+          fontSize={'16px'}
           placeholder="search for a pokémon name or number"
-          ml="10px"
-          mt="3px"
           _placeholder={{
-            color: 'blackAlpha.300',
-            fontSize: '16px'
+            fontSize: '16px',
+            color: useColorModeValue('blackAlpha.300', 'whiteAlpha.500')
           }}
         />
       </InputGroup>
