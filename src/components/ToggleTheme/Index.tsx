@@ -1,43 +1,33 @@
-import { BsSunFill } from 'react-icons/bs'
-import { GiMoonBats } from 'react-icons/gi'
-import { Box, Flex, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { Flex, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { DarkIcon, ElectricIcon } from '../Icons'
 
 export const ToggleThemeButton = () => {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-    <Box
+    <Flex
       as="div"
-      position="absolute"
-      w="64px"
-      h="64px"
-      right="12px"
+      position="fixed"
+      w="80px"
+      h="80px"
+      left="12px"
       bottom="12px"
-      bgColor={useColorModeValue('#5e69ee', '#F4F4FB')}
+      bgColor={useColorModeValue('#262B35', '#2C3444')}
       rounded="9999px"
       onClick={toggleColorMode}
       boxShadow="lg"
       cursor="pointer"
+      alignItems="center"
+      justifyContent="center"
     >
-      <Flex
-        as="div"
-        alignItems="center"
-        justifyContent="center"
-        w="64px"
-        h="64px"
-      >
-        {colorMode === 'dark' ? (
-          <BsSunFill
-            size={30}
-            color={useColorModeValue('#F4F4FB', '#5e69ee')}
-          />
-        ) : (
-          <GiMoonBats
-            size={30}
-            color={useColorModeValue('#F4F4FB', '#5e69ee')}
-          />
-        )}
-      </Flex>
-    </Box>
+      {colorMode === 'dark' ? (
+        <ElectricIcon fontSize={32} fill="#F2D94E" />
+      ) : (
+        <DarkIcon
+          fontSize={32}
+          fill={useColorModeValue('#FFFFFF', '#262B35')}
+        />
+      )}
+    </Flex>
   )
 }
