@@ -23,6 +23,7 @@ import { PokeballBgIcon } from '@/components/Icons'
 import { hexToRgbA } from '@/utils/ColorUtils'
 import PokemonService from '@/services/PokemonService'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
+import FooterComponent from '@/components/Footer/Index'
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
@@ -174,6 +175,7 @@ export function Home() {
           ))}
         </Flex>
       </Container>
+      <FooterComponent />
       <ToggleThemeButton />
     </LayoutComponent>
   )
