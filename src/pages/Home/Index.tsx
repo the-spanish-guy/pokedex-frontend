@@ -1,29 +1,28 @@
 import { useLayoutEffect, useState } from 'react'
 import {
   Box,
-  Center,
-  Container,
   Flex,
-  Heading,
-  HStack,
+  Text,
   Image,
-  Text
+  HStack,
+  Center,
+  Heading,
+  Container
 } from '@chakra-ui/react'
-import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
 
 import useStore from '@/stores/useStore'
+import Pokedex from '@/assets/cover.png'
 import LayoutComponent from '@/components/Layout'
 import { getIconByName } from '@/utils/IconUtils'
 import HeaderComponent from '@/components/Header'
 import { getInfoColors } from '@/utils/PokemonUtils'
-
-import Pokedex from '@/assets/cover.png'
-import CardPokemonComponent from '@/components/CardPokemon'
-import { PokeballBgIcon } from '@/components/Icons'
-import { hexToRgbA } from '@/utils/ColorUtils'
 import PokemonService from '@/services/PokemonService'
-import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
 import FooterComponent from '@/components/Footer/Index'
+import ViewportBlock from '@/components/Viewport/Index'
+import CardPokemonComponent from '@/components/CardPokemon'
+import { ScrollToTop } from '@/components/ScrollToTop/Index'
+import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
+import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
@@ -32,7 +31,7 @@ export function Home() {
   const [reverseColor, setReverseColor] = useState<string>()
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
 
-  const { setglobalBgColor } = useStore()
+  const { setglobalBgColor, setInViewPort } = useStore()
 
   const getInfos = () => {
     const { color, type, darkColor, reverseColor } = getInfoColors()
@@ -58,6 +57,10 @@ export function Home() {
 
   return (
     <LayoutComponent title="Home">
+      <ViewportBlock
+        onLeaveViewport={() => setInViewPort(false)}
+        onEnterViewport={() => setInViewPort(true)}
+      />
       <HStack
         backgroundColor={bgColor}
         width="100%"
@@ -150,7 +153,6 @@ export function Home() {
           </Heading>
         </Box>
       </HStack>
-      <PokeballBgIcon fill={hexToRgbA('#ABDCA7', 0.2)} />
       <HeaderComponent />
 
       <Container maxW="90%">
@@ -177,6 +179,7 @@ export function Home() {
       </Container>
       <FooterComponent />
       <ToggleThemeButton />
+      <ScrollToTop />
     </LayoutComponent>
   )
 }
