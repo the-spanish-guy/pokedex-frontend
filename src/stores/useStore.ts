@@ -2,7 +2,7 @@ import create from 'zustand'
 
 type State = {
   globalBgColor: string
-  setglobalBgColor: (counter: string) => void
+  setglobalBgColor: (globalBgColor: string) => void
   inViewPort: boolean
   setInViewPort: (inViewPort: boolean) => void
 }
