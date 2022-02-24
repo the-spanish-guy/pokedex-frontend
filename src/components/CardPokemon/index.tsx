@@ -36,6 +36,9 @@ const CardPokemonComponent: FC<Props> = ({
       bgImage={Pokeball}
       bgSize="contain"
       flexDir="column"
+      _dark={{
+        boxShadow: 'lg'
+      }}
       position="relative"
       overflow="hidden"
     >

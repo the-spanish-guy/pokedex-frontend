@@ -6,9 +6,14 @@ import {
   Image,
   HStack,
   Center,
+  chakra,
+  Button,
   Heading,
-  Container
+  Container,
+  useColorModeValue
 } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
+import { IconPlus } from '@tabler/icons'
 
 import useStore from '@/stores/useStore'
 import Pokedex from '@/assets/cover.png'
@@ -21,8 +26,11 @@ import FooterComponent from '@/components/Footer/Index'
 import ViewportBlock from '@/components/Viewport/Index'
 import CardPokemonComponent from '@/components/CardPokemon'
 import { ScrollToTop } from '@/components/ScrollToTop/Index'
+import FilterTypesComponent from '@/components/FIlterTypes/Index'
 import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
+
+const ChakraIconPlus = chakra(IconPlus)
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
@@ -155,6 +163,8 @@ export function Home() {
       </HStack>
       <HeaderComponent />
 
+      <FilterTypesComponent />
+
       <Container maxW="90%">
         <Flex
           flexDirection="row"
@@ -164,7 +174,18 @@ export function Home() {
           justifyContent="center"
         >
           {pokemons?.map((pokemon, index) => (
-            <Box w="384px" mr="75px" mb="64px" h="auto" key={index}>
+            <motion.div
+              style={{
+                width: '384px',
+                marginRight: '75px',
+                marginBottom: '64px',
+                height: 'auto',
+                cursor: 'pointer'
+              }}
+              key={index}
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
               <CardPokemonComponent
                 name={pokemon.name}
                 id={pokemon.id}
@@ -173,10 +194,33 @@ export function Home() {
                 types={pokemon.types}
                 info={pokemon.info}
               />
-            </Box>
+            </motion.div>
           ))}
         </Flex>
       </Container>
+
+      <Center>
+        <Button
+          rounded="76"
+          p="32px"
+          mt="104px"
+          mb="105px"
+          fontFamily="Montserrat"
+          fontSize="16px"
+          fontWeight="semibold"
+          bgColor={useColorModeValue('whiteAlpha.600', '#2B3240')}
+          color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
+          rightIcon={
+            <ChakraIconPlus
+              size="16px"
+              color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
+            />
+          }
+        >
+          Carregar Mais
+        </Button>
+      </Center>
+
       <FooterComponent />
       <ToggleThemeButton />
       <ScrollToTop color={bgColor as string} />

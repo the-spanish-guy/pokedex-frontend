@@ -10,7 +10,7 @@ import {
 import { ReactElement } from 'react'
 import { IconSearch } from '@tabler/icons'
 
-const SearchIconTest = chakra(IconSearch)
+const SearchIcon = chakra(IconSearch)
 
 const HeaderComponent = (): ReactElement => {
   return (
@@ -38,7 +38,7 @@ const HeaderComponent = (): ReactElement => {
         <InputLeftElement
           pointerEvents="none"
           children={
-            <SearchIconTest
+            <SearchIcon
               size="18px"
               color={useColorModeValue('blackAlpha.300', 'whiteAlpha.500')}
             />
