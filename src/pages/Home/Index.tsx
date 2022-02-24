@@ -23,6 +23,7 @@ import CardPokemonComponent from '@/components/CardPokemon'
 import { ScrollToTop } from '@/components/ScrollToTop/Index'
 import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
+import FilterTypesComponent from '@/components/FIlterTypes/Index'
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
@@ -154,6 +155,8 @@ export function Home() {
         </Box>
       </HStack>
       <HeaderComponent />
+
+      <FilterTypesComponent />
 
       <Container maxW="90%">
         <Flex
