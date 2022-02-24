@@ -24,6 +24,7 @@ import { ScrollToTop } from '@/components/ScrollToTop/Index'
 import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
 import FilterTypesComponent from '@/components/FIlterTypes/Index'
+import { motion } from 'framer-motion'
 
 export function Home() {
   const [bgColor, setBgColor] = useState<string>()
@@ -167,7 +168,18 @@ export function Home() {
           justifyContent="center"
         >
           {pokemons?.map((pokemon, index) => (
-            <Box w="384px" mr="75px" mb="64px" h="auto" key={index}>
+            <motion.div
+              style={{
+                width: '384px',
+                marginRight: '75px',
+                marginBottom: '64px',
+                height: 'auto',
+                cursor: 'pointer'
+              }}
+              key={index}
+              whileHover={{ scale: 1.1 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
               <CardPokemonComponent
                 name={pokemon.name}
                 id={pokemon.id}
@@ -176,7 +188,7 @@ export function Home() {
                 types={pokemon.types}
                 info={pokemon.info}
               />
-            </Box>
+            </motion.div>
           ))}
         </Flex>
       </Container>
