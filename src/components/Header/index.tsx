@@ -1,18 +1,23 @@
 import {
   Box,
+  Input,
   chakra,
   Heading,
-  Input,
   InputGroup,
   InputLeftElement,
   useColorModeValue
 } from '@chakra-ui/react'
-import { ReactElement } from 'react'
+import { ChangeEvent, FormEvent, ReactElement } from 'react'
 import { IconSearch } from '@tabler/icons'
 
 const SearchIcon = chakra(IconSearch)
 
-const HeaderComponent = (): ReactElement => {
+type Props = {
+  onSubmit: (e: FormEvent<HTMLInputElement>) => void
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void
+}
+
+const HeaderComponent = ({ onSubmit, onChange }: Props): ReactElement => {
   return (
     <Box
       display="flex"
@@ -30,10 +35,12 @@ const HeaderComponent = (): ReactElement => {
         pokémon
       </Heading>
       <InputGroup
+        as={'form'}
         size="lg"
         width={'auto'}
         variant={'filled'}
         bgColor={useColorModeValue('whiteAlpha.500', '#3C4555')}
+        onSubmit={onSubmit}
       >
         <InputLeftElement
           pointerEvents="none"
@@ -54,6 +61,7 @@ const HeaderComponent = (): ReactElement => {
             fontSize: '16px',
             color: useColorModeValue('blackAlpha.300', 'whiteAlpha.500')
           }}
+          onChange={onChange}
         />
       </InputGroup>
     </Box>

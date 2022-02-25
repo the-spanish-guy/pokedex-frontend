@@ -9,9 +9,9 @@ import {
   chakra,
   Button,
   Heading,
+  Spinner,
   Container,
-  useColorModeValue,
-  Spinner
+  useColorModeValue
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { IconPlus } from '@tabler/icons'
@@ -41,6 +41,7 @@ export function Home() {
   const [offset, setOffset] = useState<number>(20)
   const [loadMore, setLoadMore] = useState<boolean>(false)
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
+  const [pokemonToSearch, setPokemonToSearch] = useState<string | null>(null)
 
   const { setglobalBgColor, setInViewPort } = useStore()
 
@@ -56,9 +57,9 @@ export function Home() {
 
   const loadMorePokemon = async () => {
     setLoadMore(true)
-    const pokemonService = await new PokemonService()
+    const pokemonService = new PokemonService()
     await pokemonService
-      .getPokemons(offset)
+      .getPokemons({ offset })
       .then(data => {
         setPokemons(prevState => {
           if (prevState) {
@@ -72,9 +73,10 @@ export function Home() {
     setOffset(prevState => prevState + 20)
   }
 
-  const getPokemons = async () => {
+  const getPokemons = async (id = '') => {
+    console.log('teste chegando na function: ', id)
     const pokemonService = new PokemonService()
-    const res = await pokemonService.getPokemons()
+    const res = await pokemonService.getPokemons({ id })
     setPokemons(res)
     setOffset(20)
   }
@@ -182,7 +184,13 @@ export function Home() {
           </Heading>
         </Box>
       </HStack>
-      <HeaderComponent />
+      <HeaderComponent
+        onChange={({ currentTarget: { value } }) => setPokemonToSearch(value)}
+        onSubmit={e => {
+          e.preventDefault()
+          getPokemons(pokemonToSearch || '')
+        }}
+      />
 
       <FilterTypesComponent />
 

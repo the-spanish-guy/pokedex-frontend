@@ -1,5 +1,4 @@
 export const formatNumber = (number: number): number | string => {
-  console.log(number)
   const n = number.toString().length
 
   const cases: Record<number, string> = {
