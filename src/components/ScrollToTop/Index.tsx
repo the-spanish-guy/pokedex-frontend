@@ -7,7 +7,6 @@ const ChakraIconSrrowNarrowUp = chakra(IconArrowNarrowUp)
 
 const Scroll = ({ fadeIn, color }: { fadeIn: boolean; color: string }) => {
   const scrollToTop = () => {
-    console.log(window.outerHeight)
     window.scroll({ top: 0, left: 0, behavior: 'smooth' })
   }
   return (

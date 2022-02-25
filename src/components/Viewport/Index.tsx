@@ -3,7 +3,6 @@ import handleViewport from 'react-in-viewport'
 
 const Block = (props: { inViewport: boolean }) => {
   const { inViewport, forwardedRef } = props
-  console.log(inViewport)
   return <Box className="viewport-block" ref={forwardedRef} />
 }
 

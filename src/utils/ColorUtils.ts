@@ -80,7 +80,6 @@ export const allPokemonColors: Record<string, string> = {
 }
 
 export const hexToRgbA = (hex: string | any, opacity: number | string) => {
-  console.log({ hex })
   let c: string[] | string | any
   if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     c = hex.substring(1).split('')
@@ -100,7 +99,6 @@ export const hexToRgbA = (hex: string | any, opacity: number | string) => {
 }
 
 export const getColorByType = (type: string): string => {
-  console.log('type chegando: ', type)
   return pokemonColors[type]
 }
 
