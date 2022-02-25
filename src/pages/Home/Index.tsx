@@ -10,7 +10,8 @@ import {
   Button,
   Heading,
   Container,
-  useColorModeValue
+  useColorModeValue,
+  Spinner
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { IconPlus } from '@tabler/icons'
@@ -37,6 +38,8 @@ export function Home() {
   const [darkColor, setDarkColor] = useState<string>()
   const [pokemonType, setPokemonType] = useState<string>()
   const [reverseColor, setReverseColor] = useState<string>()
+  const [offset, setOffset] = useState<number>(20)
+  const [loadMore, setLoadMore] = useState<boolean>(false)
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
 
   const { setglobalBgColor, setInViewPort } = useStore()
@@ -51,11 +54,29 @@ export function Home() {
     setReverseColor(reverseColor)
   }
 
+  const loadMorePokemon = async () => {
+    setLoadMore(true)
+    const pokemonService = await new PokemonService()
+    await pokemonService
+      .getPokemons(offset)
+      .then(data => {
+        setPokemons(prevState => {
+          if (prevState) {
+            return [...prevState, ...data]
+          }
+          return prevState
+        })
+      })
+      .finally(() => setLoadMore(false))
+
+    setOffset(prevState => prevState + 20)
+  }
+
   const getPokemons = async () => {
     const pokemonService = new PokemonService()
     const res = await pokemonService.getPokemons()
-    console.log(res)
     setPokemons(res)
+    setOffset(20)
   }
 
   useLayoutEffect(() => {
@@ -200,25 +221,30 @@ export function Home() {
       </Container>
 
       <Center>
-        <Button
-          rounded="76"
-          p="32px"
-          mt="104px"
-          mb="105px"
-          fontFamily="Montserrat"
-          fontSize="16px"
-          fontWeight="semibold"
-          bgColor={useColorModeValue('whiteAlpha.600', '#2B3240')}
-          color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
-          rightIcon={
-            <ChakraIconPlus
-              size="16px"
-              color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
-            />
-          }
-        >
-          Carregar Mais
-        </Button>
+        {loadMore ? (
+          <Spinner size="xl" mt="106px" mb="105px" />
+        ) : (
+          <Button
+            rounded="76"
+            p="32px"
+            mt="104px"
+            mb="105px"
+            fontFamily="Montserrat"
+            fontSize="16px"
+            fontWeight="semibold"
+            bgColor={useColorModeValue('whiteAlpha.600', '#2B3240')}
+            color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
+            rightIcon={
+              <ChakraIconPlus
+                size="16px"
+                color={useColorModeValue('#2B3240', 'whiteAlpha.600')}
+              />
+            }
+            onClick={loadMorePokemon}
+          >
+            Carregar Mais
+          </Button>
+        )}
       </Center>
 
       <FooterComponent />
