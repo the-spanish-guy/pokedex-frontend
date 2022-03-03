@@ -1,5 +1,6 @@
 import BasicService from './HttpServices'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
+import { IPokemon } from '@/interfaces/PokemonInterface'
 
 type PokemonsProps = {
   offset?: number
@@ -20,6 +21,10 @@ class PokemonService extends BasicService {
         `/pokemons?offset=${offset}&id=${id || ''}`
       )
     ).data
+  }
+
+  public async getPokemon(id: number): Promise<IPokemon> {
+    return (await this.connection.get<IPokemon>(`/pokemons/${id}`)).data
   }
 }
 

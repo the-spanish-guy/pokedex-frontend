@@ -30,6 +30,7 @@ import { ScrollToTop } from '@/components/ScrollToTop/Index'
 import FilterTypesComponent from '@/components/FIlterTypes/Index'
 import { ToggleThemeButton } from '@/components/ToggleTheme/Index'
 import { ResultPokemon } from '@/interfaces/ResultPokemonApiInterface'
+import { useNavigate } from 'react-router-dom'
 
 const ChakraIconPlus = chakra(IconPlus)
 
@@ -42,6 +43,8 @@ export function Home() {
   const [loadMore, setLoadMore] = useState<boolean>(false)
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
   const [pokemonToSearch, setPokemonToSearch] = useState<string | null>(null)
+
+  const navigate = useNavigate()
 
   const { setglobalBgColor, setInViewPort } = useStore()
 
@@ -214,6 +217,7 @@ export function Home() {
               key={index}
               whileHover={{ scale: 1.1 }}
               transition={{ type: 'spring', stiffness: 300 }}
+              onClick={() => navigate(`/pokemon/${pokemon.id}`)}
             >
               <CardPokemonComponent
                 name={pokemon.name}

@@ -24,6 +24,7 @@ import { IconProps } from '@chakra-ui/react'
 
 type IconByNameProps = IconProps & {
   name: string
+  key?: number
 }
 
 export function getIconByName({ name, ...prop }: IconByNameProps) {
