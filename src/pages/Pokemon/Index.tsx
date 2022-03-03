@@ -483,9 +483,7 @@ export function Pokemon() {
                   })}
                 </Flex>
               </SwiperSlide>
-              {pokemon?.other_forms.length &&
-              // pokemon?.other_forms.shift() &&
-              pokemon.other_forms.length > 1 ? (
+              {pokemon?.other_forms.length && pokemon.other_forms.length > 1 ? (
                 <SwiperSlide
                   style={{
                     alignSelf: 'center',
