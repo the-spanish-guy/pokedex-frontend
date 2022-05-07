@@ -6,7 +6,11 @@ import { getIconByName } from '@/utils/IconUtils'
 import { pokemonTypes } from '@/utils/PokemonUtils'
 import { getColorByType } from '@/utils/ColorUtils'
 
-const FilterTypesComponent = (): ReactElement => {
+interface FilterTypeProps {
+  onClick: (type: string) => void
+}
+
+const FilterTypesComponent = ({ onClick }: FilterTypeProps): ReactElement => {
   const ref = useRef(null)
   return (
     <Flex mt="80px" mb="162px" alignContent={'center'} justifyContent="center">
@@ -26,6 +30,7 @@ const FilterTypesComponent = (): ReactElement => {
               color: getColorByType(type as string)
             }}
             ref={ref}
+            onClick={() => onClick(type)}
           >
             {getIconByName({
               name: type,
