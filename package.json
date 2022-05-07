@@ -1,41 +1,65 @@
 {
-  "name": "pokedex-web",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@material-ui/core": "^4.11.2",
-    "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.20.0",
-    "chart.js": "^2.9.4",
-    "react": "^16.13.1",
-    "react-chartjs-2": "^2.11.1",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "styled-components": "^5.2.0"
+  "name": "pokedex",
+  "version": "1.0.0",
+  "homepage": "https://github.com/the-spanish-guy/pokedex-frontend/blob/main/README.md",
+  "author": {
+    "name": "Luis Enrique MP",
+    "email": "luyo.lemp@gmail.com",
+    "url": "https://github.com/the-spanish-guy/"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "@chakra-ui/react": "^1.8.3",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "@tabler/icons": "^1.54.0",
+    "axios": "^0.25.0",
+    "framer-motion": "^6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-icons": "^4.3.1",
+    "react-in-viewport": "^1.0.0-alpha.20",
+    "react-router-dom": "6",
+    "swiper": "^8.0.6",
+    "zustand": "^3.7.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^17.0.17",
+    "@types/react": "^17.0.33",
+    "@types/react-dom": "^17.0.10",
+    "@types/react-helmet": "^6.1.5",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
+    "@vitejs/plugin-react": "^1.0.7",
+    "commitizen": "^4.2.4",
+    "cz-customizable": "6.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-react": "^7.28.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^12.3.3",
+    "prettier": "2.5.1",
+    "typescript": "^4.4.4",
+    "vite": "^2.7.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
+  },
+  "cz-customizable": {
+    "config": "config/path/to/my/config.js"
   }
 }
