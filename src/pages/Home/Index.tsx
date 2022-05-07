@@ -84,6 +84,15 @@ export function Home() {
     setOffset(20)
   }
 
+  const getPokemonByType = async (type: string) => {
+    setLoadMore(true)
+    const pokemonService = new PokemonService()
+    const result = await pokemonService.getPokemonsByType(type).then(data =>
+      setPokemons(data)
+
+    ).finally(() => setLoadMore(false))
+  }
+
   useLayoutEffect(() => {
     getInfos()
     getPokemons()
@@ -195,7 +204,7 @@ export function Home() {
         }}
       />
 
-      <FilterTypesComponent />
+      <FilterTypesComponent onClick={getPokemonByType} />
 
       <Container maxW="90%">
         <Flex
@@ -214,7 +223,7 @@ export function Home() {
                 height: 'auto',
                 cursor: 'pointer'
               }}
-              key={index}
+              key={pokemon.id}
               whileHover={{ scale: 1.1 }}
               transition={{ type: 'spring', stiffness: 300 }}
               onClick={() => navigate(`/pokemon/${pokemon.id}`)}
