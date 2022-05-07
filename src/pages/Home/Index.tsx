@@ -21,6 +21,7 @@ import Pokedex from '@/assets/cover.png'
 import LayoutComponent from '@/components/Layout'
 import { getIconByName } from '@/utils/IconUtils'
 import HeaderComponent from '@/components/Header'
+import { LoadComponent } from '@/components/Load'
 import { getInfoColors } from '@/utils/PokemonUtils'
 import PokemonService from '@/services/PokemonService'
 import FooterComponent from '@/components/Footer/Index'
@@ -39,6 +40,7 @@ export function Home() {
   const [darkColor, setDarkColor] = useState<string>()
   const [pokemonType, setPokemonType] = useState<string>()
   const [reverseColor, setReverseColor] = useState<string>()
+  const [load, setLoad] = useState<boolean>(false)
   const [offset, setOffset] = useState<number>(20)
   const [loadMore, setLoadMore] = useState<boolean>(false)
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
@@ -46,7 +48,7 @@ export function Home() {
 
   const navigate = useNavigate()
 
-  const { setglobalBgColor, setInViewPort } = useStore()
+  const { setGlobalBgColor, setInViewPort } = useStore()
 
   const getInfos = () => {
     const { color, type, darkColor, reverseColor } = getInfoColors()
@@ -54,7 +56,7 @@ export function Home() {
     setBgColor(color)
     setPokemonType(type)
     setDarkColor(darkColor)
-    setglobalBgColor(color)
+    setGlobalBgColor(color)
     setReverseColor(reverseColor)
   }
 
@@ -82,6 +84,15 @@ export function Home() {
     const res = await pokemonService.getPokemons({ id })
     setPokemons(res)
     setOffset(20)
+  }
+
+  const getPokemonByType = async (type: string) => {
+    setLoad(true)
+    const pokemonService = new PokemonService()
+    await pokemonService
+      .getPokemonsByType(type)
+      .then(data => setPokemons(data))
+      .finally(() => setLoad(false))
   }
 
   useLayoutEffect(() => {
@@ -195,7 +206,7 @@ export function Home() {
         }}
       />
 
-      <FilterTypesComponent />
+      <FilterTypesComponent onClick={getPokemonByType} />
 
       <Container maxW="90%">
         <Flex
@@ -214,7 +225,7 @@ export function Home() {
                 height: 'auto',
                 cursor: 'pointer'
               }}
-              key={index}
+              key={pokemon.id}
               whileHover={{ scale: 1.1 }}
               transition={{ type: 'spring', stiffness: 300 }}
               onClick={() => navigate(`/pokemon/${pokemon.id}`)}
@@ -261,6 +272,7 @@ export function Home() {
 
       <FooterComponent />
       <ToggleThemeButton />
+      <LoadComponent show={load} />
       <ScrollToTop color={bgColor as string} />
     </LayoutComponent>
   )

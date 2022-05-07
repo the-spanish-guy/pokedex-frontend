@@ -26,6 +26,12 @@ class PokemonService extends BasicService {
   public async getPokemon(id: number): Promise<IPokemon> {
     return (await this.connection.get<IPokemon>(`/pokemons/${id}`)).data
   }
+
+  public async getPokemonsByType(type: string): Promise<ResultPokemon[]> {
+    return (
+      await this.connection.get<ResultPokemon[]>(`/pokemons/type/${type}`)
+    ).data
+  }
 }
 
 export default PokemonService
