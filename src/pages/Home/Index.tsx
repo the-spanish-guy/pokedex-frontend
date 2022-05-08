@@ -10,6 +10,7 @@ import {
   Button,
   Heading,
   Spinner,
+  useToast,
   Container,
   useColorModeValue
 } from '@chakra-ui/react'
@@ -46,6 +47,8 @@ export function Home() {
   const [pokemons, setPokemons] = useState<ResultPokemon[] | null>(null)
   const [pokemonToSearch, setPokemonToSearch] = useState<string | null>(null)
 
+  const toast = useToast()
+
   const navigate = useNavigate()
 
   const { setGlobalBgColor, setInViewPort } = useStore()
@@ -81,9 +84,21 @@ export function Home() {
   const getPokemons = async (id = '') => {
     console.log('teste chegando na function: ', id)
     const pokemonService = new PokemonService()
-    const res = await pokemonService.getPokemons({ id })
-    setPokemons(res)
-    setOffset(20)
+    await pokemonService
+      .getPokemons({ id })
+      .then(result => {
+        setPokemons(result)
+      })
+      .catch(error =>
+        toast({
+          title: 'An error occurred',
+          description: `Informed Pokemon ${error.response.data.msg}`,
+          status: 'error',
+          isClosable: true,
+          variant: 'top-accent'
+        })
+      )
+      .finally(() => setOffset(20))
   }
 
   const getPokemonByType = async (type: string) => {
