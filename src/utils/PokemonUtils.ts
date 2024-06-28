@@ -21,13 +21,13 @@ export const pokemonTypes = {
   water: 'water'
 }
 
-type teste = {
+type IInfoColors = {
   type: string
   color: string
   darkColor: string
   reverseColor: string
 }
-export const getInfoColors = (): teste => {
+export const getInfoColors = (): IInfoColors => {
   const index: string[] = Object.keys(allPokemonColors)
 
   const randomIndex = Math.floor(Math.random() * index.length)
